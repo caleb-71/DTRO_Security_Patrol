@@ -1,0 +1,23 @@
+[project]
+name = "dtro_security_patrol"
+version = "1.0.0"
+description = "DTRO 경비순찰 체크리스트"
+requires-python = ">=3.10"
+dependencies = [
+    "flet",
+]
+
+[tool.flet]
+org = "com.dtro"
+product = "DTRO Securit"
+
+# ✅ 앱 아이콘 — 프로젝트 루트의 Image01.png 사용
+# Flet 빌드 시 Android 다양한 해상도(mdpi~xxxhdpi)로 자동 변환
+icon = "Image01.png"
+
+[tool.flet.android]
+min_sdk_version = 24
+permissions = [
+    "WRITE_EXTERNAL_STORAGE",
+    "READ_EXTERNAL_STORAGE",
+]
