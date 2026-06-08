@@ -8,12 +8,11 @@ from utils.email_sender import send_report_email
 
 
 def ChecklistView(page: ft.Page):
-
     # ==========================================
     # 🌟 1. 상태 변수
     # ==========================================
     signature_strokes = []
-    current_stroke    = []
+    current_stroke = []
 
     # ==========================================
     # 🌟 2. 알림 헬퍼
@@ -23,9 +22,9 @@ def ChecklistView(page: ft.Page):
         page.snack_bar.open = True
         page.update()
 
-    _r_icon  = ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN_700, size=30)
+    _r_icon = ft.Icon(ft.Icons.CHECK_CIRCLE, color=ft.Colors.GREEN_700, size=30)
     _r_title = ft.Text("", size=17, weight=ft.FontWeight.BOLD, color=ft.Colors.GREEN_700)
-    _r_msg   = ft.Text("", size=13, color=style.AppColors.TEXT_MAIN)
+    _r_msg = ft.Text("", size=13, color=style.AppColors.TEXT_MAIN)
 
     def _close_result(e):
         result_sheet.open = False
@@ -49,11 +48,11 @@ def ChecklistView(page: ft.Page):
     )
 
     def _show_result(title: str, msg: str, success: bool = True):
-        _r_icon.name   = ft.Icons.CHECK_CIRCLE if success else ft.Icons.ERROR_OUTLINE
-        _r_icon.color  = ft.Colors.GREEN_700   if success else ft.Colors.RED_700
+        _r_icon.name = ft.Icons.CHECK_CIRCLE if success else ft.Icons.ERROR_OUTLINE
+        _r_icon.color = ft.Colors.GREEN_700 if success else ft.Colors.RED_700
         _r_title.value = title
-        _r_title.color = ft.Colors.GREEN_700   if success else ft.Colors.RED_700
-        _r_msg.value   = msg
+        _r_title.color = ft.Colors.GREEN_700 if success else ft.Colors.RED_700
+        _r_msg.value = msg
         result_sheet.open = True
         page.update()
 
@@ -74,7 +73,7 @@ def ChecklistView(page: ft.Page):
                     ft.Text("미체크 항목 안내", size=17, weight=ft.FontWeight.BOLD,
                             color=ft.Colors.ORANGE_700),
                 ], spacing=8),
-                ft.Text("아래 항목들을 양호/불량으로 선택해주세요.",
+                ft.Text("아래 항목들을 양호/불량/해당없음 으로 선택해주세요.",
                         size=13, color=ft.Colors.BLUE_GREY_600),
                 ft.Divider(height=4),
                 ft.Container(content=_unchecked_col, height=280),
@@ -144,7 +143,8 @@ def ChecklistView(page: ft.Page):
     def _pan_start(e: ft.DragStartEvent):
         nonlocal current_stroke
         if sign_hint.visible:
-            sign_hint.visible = False; sign_hint.update()
+            sign_hint.visible = False;
+            sign_hint.update()
         current_stroke = [(e.local_position.x, e.local_position.y)]
         signature_strokes.append(current_stroke)
 
@@ -153,21 +153,28 @@ def ChecklistView(page: ft.Page):
         _redraw()
 
     def _clear_signature(e):
-        signature_strokes.clear(); current_stroke.clear()
-        signature_canvas.shapes = []; signature_canvas.update()
-        sign_hint.visible = True; sign_hint.update()
+        signature_strokes.clear();
+        current_stroke.clear()
+        signature_canvas.shapes = [];
+        signature_canvas.update()
+        sign_hint.visible = True;
+        sign_hint.update()
         _set_sign_btn_state(done=False)
 
     def _save_signature(e):
         if not signature_strokes:
-            _show_snack("서명을 먼저 그려주세요!", ft.Colors.RED_ACCENT); return
+            _show_snack("서명을 먼저 그려주세요!", ft.Colors.RED_ACCENT);
+            return
         _set_sign_btn_state(done=True)
-        sign_sheet.open = False; page.update()
+        sign_sheet.open = False;
+        page.update()
 
     def _set_sign_btn_state(done: bool):
         if done:
-            sign_text.value = "서명완료"; sign_text.color = ft.Colors.GREEN_700
-            sign_icon.name  = ft.Icons.CHECK_CIRCLE; sign_icon.color = ft.Colors.GREEN_700
+            sign_text.value = "서명완료";
+            sign_text.color = ft.Colors.GREEN_700
+            sign_icon.name = ft.Icons.CHECK_CIRCLE;
+            sign_icon.color = ft.Colors.GREEN_700
             sign_btn.border = ft.Border(
                 top=ft.BorderSide(2, ft.Colors.GREEN_500),
                 bottom=ft.BorderSide(2, ft.Colors.GREEN_500),
@@ -176,8 +183,10 @@ def ChecklistView(page: ft.Page):
             )
             sign_btn.bgcolor = ft.Colors.GREEN_50
         else:
-            sign_text.value = "서명"; sign_text.color = ft.Colors.BLUE_GREY_400
-            sign_icon.name  = ft.Icons.DRAW; sign_icon.color = style.AppColors.PRIMARY
+            sign_text.value = "서명";
+            sign_text.color = ft.Colors.BLUE_GREY_400
+            sign_icon.name = ft.Icons.DRAW;
+            sign_icon.color = style.AppColors.PRIMARY
             sign_btn.border = ft.Border(
                 top=ft.BorderSide(1, ft.Colors.BLACK26),
                 bottom=ft.BorderSide(1, ft.Colors.BLACK26),
@@ -219,7 +228,7 @@ def ChecklistView(page: ft.Page):
                                        spacing=4, tight=True),
                         on_click=_clear_signature,
                         style=ft.ButtonStyle(side=ft.BorderSide(1, ft.Colors.RED_300),
-                                              color=ft.Colors.RED_400),
+                                             color=ft.Colors.RED_400),
                         expand=1,
                     ),
                     ft.ElevatedButton(
@@ -248,10 +257,14 @@ def ChecklistView(page: ft.Page):
     worker_list_col = ft.Column(spacing=4, scroll=ft.ScrollMode.AUTO)
 
     def _apply_worker(name: str):
-        manager_text.value = name; manager_text.color = ft.Colors.BLACK
-        manager_text.size  = 18;  manager_icon.visible = False
-        manager_btn.data   = name; manager_btn.update()
-        worker_sheet_input.open = False; page.update()
+        manager_text.value = name;
+        manager_text.color = ft.Colors.BLACK
+        manager_text.size = 18;
+        manager_icon.visible = False
+        manager_btn.data = name;
+        manager_btn.update()
+        worker_sheet_input.open = False;
+        page.update()
 
     def confirm_worker_name(e):
         name = worker_name_field.value.strip()
@@ -267,7 +280,9 @@ def ChecklistView(page: ft.Page):
         )
         for w in workers:
             w_name, w_dept = w[1], w[2]
+
             def make_tap(n): return lambda _: _apply_worker(n)
+
             worker_list_col.controls.append(
                 ft.Container(
                     content=ft.Row([
@@ -313,14 +328,18 @@ def ChecklistView(page: ft.Page):
     def on_date_change(e):
         if e.control.value:
             date_text.value = e.control.value.strftime("%Y.%m.%d")
-            date_text.color = ft.Colors.BLACK; date_text.size = 18
-            date_icon.visible = False; date_btn.update()
+            date_text.color = ft.Colors.BLACK;
+            date_text.size = 18
+            date_icon.visible = False;
+            date_btn.update()
 
     def on_time_change(e):
         if e.control.value:
             time_text.value = e.control.value.strftime("%H:%M")
-            time_text.color = ft.Colors.BLACK; time_text.size = 18
-            time_icon.visible = False; time_btn.update()
+            time_text.color = ft.Colors.BLACK;
+            time_text.size = 18
+            time_icon.visible = False;
+            time_btn.update()
 
     date_picker = ft.DatePicker(on_change=on_date_change)
     time_picker = ft.TimePicker(on_change=on_time_change)
@@ -336,23 +355,25 @@ def ChecklistView(page: ft.Page):
 
     def open_signature_pad(e):
         sign_hint.visible = not bool(signature_strokes)
-        sign_sheet.open = True; page.update()
+        sign_sheet.open = True;
+        page.update()
 
     def open_worker_input(e):
         worker_name_field.value = ""
         build_worker_list()
-        worker_sheet_input.open = True; page.update()
+        worker_sheet_input.open = True;
+        page.update()
 
-    def open_date_picker(e): date_picker.open = True; page.update()
-    def open_time_picker(e): time_picker.open = True; page.update()
+    def open_date_picker(e):
+        date_picker.open = True; page.update()
+
+    def open_time_picker(e):
+        time_picker.open = True; page.update()
 
     # ==========================================
     # 🌟 6. 기본정보 카드
-    #   ✅ 순찰명 제거
-    #   ✅ 기상상황 가로 배치 (scroll)
     # ==========================================
 
-    # ✅ 기상상황 — 가로 스크롤 1줄 배치
     weather_rg = ft.RadioGroup(
         value="맑음",
         content=ft.Row(
@@ -361,30 +382,30 @@ def ChecklistView(page: ft.Page):
                 ft.Radio(value="우천", label="🌧 우천", fill_color=ft.Colors.BLUE_700),
                 ft.Radio(value="강풍", label="💨 강풍", fill_color=ft.Colors.ORANGE_600),
                 ft.Radio(value="폭설", label="❄ 폭설", fill_color=ft.Colors.GREY_500),
-                ft.Radio(value="기타", label="기타",    fill_color=ft.Colors.GREY_600),
+                ft.Radio(value="기타", label="기타", fill_color=ft.Colors.GREY_600),
             ],
             spacing=0,
-            scroll=ft.ScrollMode.AUTO,   # ✅ 가로 스크롤, wrap 없음
+            scroll=ft.ScrollMode.AUTO,
         ),
     )
 
     _now = datetime.now()
-    date_text    = ft.Text(_now.strftime("%Y.%m.%d"), size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
-    time_text    = ft.Text(_now.strftime("%H:%M"),    size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
+    date_text = ft.Text(_now.strftime("%Y.%m.%d"), size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
+    time_text = ft.Text(_now.strftime("%H:%M"), size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.BLACK)
     manager_text = ft.Text("근무자", size=13, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_400)
-    sign_text    = ft.Text("서명",   size=13, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_400)
+    sign_text = ft.Text("서명", size=13, weight=ft.FontWeight.BOLD, color=ft.Colors.BLUE_GREY_400)
 
-    date_icon    = ft.Icon(ft.Icons.CALENDAR_MONTH, size=20, color=style.AppColors.PRIMARY, visible=False)
-    time_icon    = ft.Icon(ft.Icons.ACCESS_TIME,    size=20, color=style.AppColors.PRIMARY, visible=False)
-    manager_icon = ft.Icon(ft.Icons.SECURITY,       size=20, color=style.AppColors.PRIMARY)
-    sign_icon    = ft.Icon(ft.Icons.DRAW,           size=20, color=style.AppColors.PRIMARY)
+    date_icon = ft.Icon(ft.Icons.CALENDAR_MONTH, size=20, color=style.AppColors.PRIMARY, visible=False)
+    time_icon = ft.Icon(ft.Icons.ACCESS_TIME, size=20, color=style.AppColors.PRIMARY, visible=False)
+    manager_icon = ft.Icon(ft.Icons.SECURITY, size=20, color=style.AppColors.PRIMARY)
+    sign_icon = ft.Icon(ft.Icons.DRAW, size=20, color=style.AppColors.PRIMARY)
 
     def create_compact_btn(icon_obj, text_obj, click_fn):
         return ft.Container(
             content=ft.Column([icon_obj, text_obj],
-                               alignment=ft.MainAxisAlignment.CENTER,
-                               horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                               spacing=2),
+                              alignment=ft.MainAxisAlignment.CENTER,
+                              horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                              spacing=2),
             on_click=click_fn, expand=1, height=65, ink=True, border_radius=8,
             border=ft.Border(
                 top=ft.BorderSide(1, ft.Colors.BLACK26), bottom=ft.BorderSide(1, ft.Colors.BLACK26),
@@ -392,11 +413,11 @@ def ChecklistView(page: ft.Page):
             ),
         )
 
-    date_btn    = create_compact_btn(date_icon,    date_text,    open_date_picker)
-    time_btn    = create_compact_btn(time_icon,    time_text,    open_time_picker)
+    date_btn = create_compact_btn(date_icon, date_text, open_date_picker)
+    time_btn = create_compact_btn(time_icon, time_text, open_time_picker)
     manager_btn = create_compact_btn(manager_icon, manager_text, open_worker_input)
     manager_btn.data = ""
-    sign_btn    = create_compact_btn(sign_icon, sign_text, open_signature_pad)
+    sign_btn = create_compact_btn(sign_icon, sign_text, open_signature_pad)
 
     custom_card_style = style.card_style()
     custom_card_style["margin"] = ft.Margin(0, 0, 0, 0)
@@ -408,9 +429,7 @@ def ChecklistView(page: ft.Page):
                 ft.Text("경비순찰 기본정보", size=16, weight=ft.FontWeight.BOLD,
                         color=style.AppColors.PRIMARY),
             ]),
-            # ✅ 순찰명 제거 — 날짜/시간/근무자/서명 버튼만
             ft.Row([date_btn, time_btn, manager_btn, sign_btn], spacing=8),
-            # ✅ 기상상황 — 가로 1줄
             ft.Container(
                 content=ft.Row([
                     ft.Text("기상상황", size=12, color=style.AppColors.TEXT_SUB,
@@ -432,9 +451,9 @@ def ChecklistView(page: ft.Page):
     controls_dict_map = {k: {} for k in work_types_list}
     active_tab = {"work_type": work_types_list[0]}
 
+    # ✅ 이제 모든 구역에 '해당없음'이 적용되므로 has_na 설정은 제거했습니다.
     patrol_data = {
         "관리동": {
-            "has_na": False,
             "items": [
                 "‣ 화재·연기·타는 냄새·불꽃 등 이상징후 여부",
                 "‣ 유류·위험물·인화성 물질 관리상태 이상 여부",
@@ -448,7 +467,6 @@ def ChecklistView(page: ft.Page):
             ],
         },
         "유치선/외곽울타리": {
-            "has_na": True,
             "items": [
                 "‣ 시설물 및 구조물(외곽 울타리·펜스) 파손 여부",
                 "‣ 무단침입 및 수상자 배회 여부",
@@ -461,7 +479,6 @@ def ChecklistView(page: ft.Page):
             ],
         },
         "출고검사장/창고/배수로": {
-            "has_na": True,
             "items": [
                 "‣ 화재·연기·타는 냄새·불꽃 등 이상징후 여부",
                 "‣ 유류·위험물·인화성 물질 관리상태 이상 여부",
@@ -478,21 +495,19 @@ def ChecklistView(page: ft.Page):
         },
     }
 
-    def make_check_item(text, work_type, has_na=False):
+    def make_check_item(text, work_type):
         """
-        ✅ 각 항목마다 조치사항·비고 입력 필드 추가
+        ✅ 모든 항목에 양호/불량/해당없음 라디오버튼 추가 및 색상 커스텀
         """
         radios = [
             ft.Radio(value="양호", label="양호", fill_color=ft.Colors.TEAL_600),
             ft.Radio(value="불량", label="불량", fill_color=ft.Colors.RED_600),
+            ft.Radio(value="해당없음", label="해당없음", fill_color=ft.Colors.AMBER_700),
         ]
-        if has_na:
-            radios.append(
-                ft.Radio(value="해당없음", label="해당없음", fill_color=ft.Colors.AMBER_700)
-            )
+
         rg = ft.RadioGroup(content=ft.Row(radios, spacing=16))
 
-        # ✅ 조치사항 / 비고 텍스트 입력 필드
+        # 조치사항 / 비고 텍스트 입력 필드
         action_field = ft.TextField(
             label="조치사항",
             height=44, expand=True, border_radius=8, text_size=12,
@@ -506,11 +521,11 @@ def ChecklistView(page: ft.Page):
             border_color=ft.Colors.BLACK26,
         )
 
-        # ✅ controls_dict_map에 rg + action + note 함께 저장
+        # controls_dict_map에 rg + action + note 함께 저장
         controls_dict_map[work_type][text] = {
-            "rg":     rg,
+            "rg": rg,
             "action": action_field,
-            "note":   note_field,
+            "note": note_field,
         }
 
         return ft.Container(
@@ -527,31 +542,32 @@ def ChecklistView(page: ft.Page):
     # ==========================================
     def on_save_click(e):
         if not manager_btn.data:
-            _show_snack("근무자를 입력하세요.", ft.Colors.RED_ACCENT); return
+            _show_snack("근무자를 입력하세요.", ft.Colors.RED_ACCENT);
+            return
         if not signature_strokes:
-            _show_snack("근무자 서명이 누락되었습니다!", ft.Colors.RED_ACCENT); return
+            _show_snack("근무자 서명이 누락되었습니다!", ft.Colors.RED_ACCENT);
+            return
 
         current_work = active_tab["work_type"]
-        # ✅ missing 체크: controls_dict_map 구조 변경 반영
         missing = [t for t, v in controls_dict_map[current_work].items() if not v["rg"].value]
         if missing:
-            _show_unchecked(missing); return
+            _show_unchecked(missing);
+            return
 
-        # ✅ results에 result + action + note 포함
         results = {
             t: {
                 "result": v["rg"].value,
                 "action": v["action"].value.strip(),
-                "note":   v["note"].value.strip(),
+                "note": v["note"].value.strip(),
             }
             for t, v in controls_dict_map[current_work].items()
         }
         try:
             save_checklist(
-                current_work,               # task_name = 순찰구역
+                current_work,
                 date_text.value,
                 time_text.value,
-                weather_rg.value or "맑음",  # location = 기상상황
+                weather_rg.value or "맑음",
                 manager_btn.data,
                 current_work,
                 results,
@@ -570,27 +586,30 @@ def ChecklistView(page: ft.Page):
     # ==========================================
     def on_html_report_click(e):
         if not manager_btn.data:
-            _show_snack("근무자를 입력하세요.", ft.Colors.RED_ACCENT); return
+            _show_snack("근무자를 입력하세요.", ft.Colors.RED_ACCENT);
+            return
         if not signature_strokes:
-            _show_snack("근무자 서명이 누락되었습니다!", ft.Colors.RED_ACCENT); return
+            _show_snack("근무자 서명이 누락되었습니다!", ft.Colors.RED_ACCENT);
+            return
 
         current_work = active_tab["work_type"]
         missing = [t for t, v in controls_dict_map[current_work].items() if not v["rg"].value]
         if missing:
-            _show_unchecked(missing); return
+            _show_unchecked(missing);
+            return
 
         data = {
-            "task_name":     current_work,
-            "task_date":     date_text.value,
-            "task_time":     time_text.value,
-            "location":      weather_rg.value or "맑음",
-            "manager_name":  manager_btn.data,
-            "work_type":     current_work,
+            "task_name": current_work,
+            "task_date": date_text.value,
+            "task_time": time_text.value,
+            "location": weather_rg.value or "맑음",
+            "manager_name": manager_btn.data,
+            "work_type": current_work,
             "check_results": {
                 t: {
                     "result": v["rg"].value,
                     "action": v["action"].value.strip(),
-                    "note":   v["note"].value.strip(),
+                    "note": v["note"].value.strip(),
                 }
                 for t, v in controls_dict_map[current_work].items()
             },
@@ -622,9 +641,8 @@ def ChecklistView(page: ft.Page):
     # 🌟 10. 체크리스트 탭 구성
     # ==========================================
     def create_tab_content(work_type):
-        info   = patrol_data[work_type]
-        has_na = info["has_na"]
-        items  = info["items"]
+        info = patrol_data[work_type]
+        items = info["items"]
 
         section = ft.Container(
             content=ft.Column([
@@ -635,14 +653,14 @@ def ChecklistView(page: ft.Page):
                     ft.Container(expand=True),
                     ft.Container(
                         content=ft.Text(
-                            "양호/불량/해당없음" if has_na else "양호/불량",
+                            "양호/불량/해당없음",  # ✅ 텍스트 강제 고정
                             size=11, color=style.AppColors.TEXT_SUB,
                         ),
                         padding=ft.Padding(6, 3, 6, 3),
                         bgcolor=ft.Colors.BLUE_GREY_50, border_radius=6,
                     ),
                 ]),
-                *[make_check_item(item, work_type, has_na=has_na) for item in items],
+                *[make_check_item(item, work_type) for item in items],  # ✅ has_na 인수 제거
             ], spacing=10),
             **style.card_style(),
         )
@@ -683,15 +701,16 @@ def ChecklistView(page: ft.Page):
         active_tab["work_type"] = sel
         for c in tab_row.controls:
             if c.data == sel:
-                c.border         = ft.Border(bottom=ft.BorderSide(3, style.AppColors.PRIMARY))
-                c.content.color  = style.AppColors.PRIMARY
+                c.border = ft.Border(bottom=ft.BorderSide(3, style.AppColors.PRIMARY))
+                c.content.color = style.AppColors.PRIMARY
                 c.content.weight = ft.FontWeight.BOLD
             else:
-                c.border         = None
-                c.content.color  = style.AppColors.TEXT_SUB
+                c.border = None
+                c.content.color = style.AppColors.TEXT_SUB
                 c.content.weight = ft.FontWeight.NORMAL
         tab_content_view.content = create_tab_content(sel)
-        tab_row.update(); tab_content_view.update()
+        tab_row.update();
+        tab_content_view.update()
 
     tab_row = ft.Row(
         scroll=ft.ScrollMode.AUTO, spacing=0,
@@ -704,7 +723,8 @@ def ChecklistView(page: ft.Page):
                     color=style.AppColors.PRIMARY if wt == work_types_list[0] else style.AppColors.TEXT_SUB,
                 ),
                 padding=ft.Padding(14, 12, 14, 12),
-                border=ft.Border(bottom=ft.BorderSide(3, style.AppColors.PRIMARY)) if wt == work_types_list[0] else None,
+                border=ft.Border(bottom=ft.BorderSide(3, style.AppColors.PRIMARY)) if wt == work_types_list[
+                    0] else None,
                 on_click=on_tab_change, ink=True,
             )
             for wt in work_types_list
