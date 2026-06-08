@@ -37,18 +37,18 @@ def send_report_email(html_path: str, data: dict) -> tuple:
     msg = MIMEMultipart()
     msg["From"]    = sender_email
     msg["To"]      = receiver_email
-    msg["Subject"] = f"[DTRO 안전보건] {work_type} 점검보고서 — {manager_name} ({task_date})"
+    msg["Subject"] = f"[DTRO 경비순찰] {work_type} 순찰보고서 — {manager_name} ({task_date})"
 
-    body = f"""안녕하세요, DTRO 안전보건 앱에서 자동 발송된 점검 보고서입니다.
+    body = f"""안녕하세요, DTRO 경비순찰 앱에서 자동 발송된 순찰 보고서입니다.
 
-■ 작업명    : {task_name}
-■ 작업 종류 : {work_type}
-■ 작업자    : {manager_name}
-■ 작업 일자 : {task_date}
+■ 순찰명    : {task_name}
+■ 순찰 구역 : {work_type}
+■ 근무자    : {manager_name}
+■ 순찰 일자 : {task_date}
 
 첨부된 HTML 파일을 브라우저로 열어 점검 내역 및 서명을 확인하세요.
 
-※ 본 메일은 DTRO 안전보건 앱에서 자동으로 발송됩니다.
+※ 본 메일은 DTRO 경비순찰 앱에서 자동으로 발송됩니다.
 """
     msg.attach(MIMEText(body, "plain", "utf-8"))
 

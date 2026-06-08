@@ -10,7 +10,7 @@ if _platform.system() == "Windows":
 else:
     _BASE_DIR = os.getcwd()
 
-DB_FILE = os.path.join(_BASE_DIR, "dtro_safety.db")
+DB_FILE = os.path.join(_BASE_DIR, "dtro_security_patrol.db")
 
 
 def init_db():
