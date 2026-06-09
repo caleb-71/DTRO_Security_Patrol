@@ -8,3 +8,6 @@ build/
 
 # SQLite Database files
 *.db
+
+# .gitignore 에 추가
+.idea/

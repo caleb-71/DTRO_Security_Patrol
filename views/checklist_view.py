@@ -353,10 +353,9 @@ def ChecklistView(page: ft.Page):
     # ==========================================
 
     # ✅ 기상상황 — 커스텀 토글 버튼 (가로 스크롤 완전 지원)
-    #    RadioGroup은 내부 스크롤을 막으므로 커스텀 버튼으로 교체
-    _weather_val = {"value": "맑음"}
+    #    ft.RadioGroup은 내부 스크롤을 막아 커스텀 버튼으로 교체
+    _weather_val  = {"value": "맑음"}
     _weather_btns = {}
-
     _weather_options = [
         ("맑음", "☀  맑음",  ft.Colors.BLUE_500),
         ("우천", "🌧  우천",  ft.Colors.BLUE_700),
@@ -369,16 +368,13 @@ def ChecklistView(page: ft.Page):
         _weather_val["value"] = val
         for v, btn in _weather_btns.items():
             selected = (v == val)
+            color = _weather_options[[x[0] for x in _weather_options].index(v)][2]
             btn.bgcolor = ft.Colors.BLUE_100 if selected else ft.Colors.WHITE
-            btn.border = ft.Border(
-                top=ft.BorderSide(2 if selected else 1,
-                                  _weather_options[[x[0] for x in _weather_options].index(v)][2]),
-                bottom=ft.BorderSide(2 if selected else 1,
-                                     _weather_options[[x[0] for x in _weather_options].index(v)][2]),
-                left=ft.BorderSide(2 if selected else 1,
-                                   _weather_options[[x[0] for x in _weather_options].index(v)][2]),
-                right=ft.BorderSide(2 if selected else 1,
-                                    _weather_options[[x[0] for x in _weather_options].index(v)][2]),
+            btn.border  = ft.Border(
+                top=ft.BorderSide(2 if selected else 1, color),
+                bottom=ft.BorderSide(2 if selected else 1, color),
+                left=ft.BorderSide(2 if selected else 1, color),
+                right=ft.BorderSide(2 if selected else 1, color),
             )
             btn.update()
 
@@ -455,7 +451,7 @@ def ChecklistView(page: ft.Page):
                 content=ft.Column([
                     ft.Text("기상상황", size=12, color=style.AppColors.TEXT_SUB,
                             weight=ft.FontWeight.BOLD),
-                    weather_row,    # ✅ 가로 스크롤 토글 버튼
+                    weather_row,
                 ], spacing=6),
                 padding=ft.Padding(8, 8, 8, 8),
                 bgcolor=ft.Colors.BLUE_GREY_50,
@@ -474,7 +470,7 @@ def ChecklistView(page: ft.Page):
 
     patrol_data = {
         "관리동": {
-            "has_na": False,
+            "has_na": True,   # ✅ 해당없음 추가
             "items": [
                 "‣ 화재·연기·타는 냄새·불꽃 등 이상징후 여부",
                 "‣ 유류·위험물·인화성 물질 관리상태 이상 여부",
@@ -735,6 +731,7 @@ def ChecklistView(page: ft.Page):
 
     tab_row = ft.Row(
         scroll=ft.ScrollMode.AUTO, spacing=0,
+        alignment=ft.MainAxisAlignment.CENTER,
         controls=[
             ft.Container(
                 data=wt,
