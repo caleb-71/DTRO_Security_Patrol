@@ -368,7 +368,7 @@ def SettingsView(page: ft.Page):
                         title=ft.Text("앱 정보",
                                       weight=ft.FontWeight.BOLD, size=15),
                         subtitle=ft.Text(
-                            "버전: 1.0.0\n개발: DTRO 안전계획팀",
+                            "버전: 1.0.1\n개발: DTRO 안전계획팀",
                             size=13),
                     ),
                     ft.Divider(height=20, color=ft.Colors.BLACK12),

@@ -1,6 +1,6 @@
 [project]
 name = "dtro_security_patrol"
-version = "1.0.0"
+version = "1.0.1"
 description = "DTRO 경비순찰 체크리스트"
 requires-python = ">=3.10"
 dependencies = [
